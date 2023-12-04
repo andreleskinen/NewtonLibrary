@@ -1,10 +1,13 @@
-﻿namespace Library;
+﻿using Library.Data;
+
+namespace Library;
 
 class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        DataAccess dataAccess = new DataAccess();
+        dataAccess.Seed();
     }
 }
 
