@@ -15,8 +15,24 @@ namespace Library.Data
             var book4 = new Book { BookTitle = "Harry Potter and the Sorcerer's Stone", Author = "J.K.Rowling", ISBN = "978-0-7679-2766-6", PublicationYear = 1997, Rating = 4.7, Borrowed = false };
             var book5 = new Book { BookTitle = "The Hobbit", Author = "J.R.R.Tolkien", ISBN = "978-0-261-10295-3", PublicationYear = 1937, Rating = 4.3, Borrowed = false };
 
-            var borrower1 = new Borrower { FirstName = "André", LastName = "Leskinen", LibraryCardNumber = 143050, BorrowedBooks = new List<Book> { book1 } };
+            var borrower1 = new Borrower
+            {
+                FirstName = "André",
+                LastName = "Leskinen",
+                LibraryCardNumber = 143050,
+                BorrowedBooks = new List<Book> { book1 }
+            };
 
+            var bookToBorrow = context.Books.FirstOrDefault(b => b.BookTitle == "Can´t Hurt Me");
+
+            if (bookToBorrow != null && !bookToBorrow.Borrowed)
+            {
+                bookToBorrow.Borrowed = true;
+                bookToBorrow.BorrowDate = DateTime.Now;
+                borrower1.BorrowedBooks.Add(bookToBorrow);
+            }
+
+            
             context.Books.AddRange(book1, book2, book3, book4, book5);
             context.Borrowers.Add(borrower1);
 
