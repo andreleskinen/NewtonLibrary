@@ -8,6 +8,7 @@ class Program
     {
         DataAccess dataAccess = new DataAccess();
         dataAccess.Seed();
+        
     }
 }
 
