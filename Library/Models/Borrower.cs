@@ -10,6 +10,11 @@ namespace Library.Models
         public string? LastName { get; set; }
         public int LibraryCardNumber { get; set; }
         public List<Book> BorrowedBooks { get; set; }
+
+        public Borrower()
+        {
+            BorrowedBooks = new List<Book>();
+        }
     }
 }
 
