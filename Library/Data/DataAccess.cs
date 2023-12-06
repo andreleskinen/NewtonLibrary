@@ -60,32 +60,6 @@ namespace Library.Data
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         public void ReturnBook(string bookTitle, int libraryCardNumber)
         {
             var bookToReturn = context.Books.FirstOrDefault(b => b.BookTitle == bookTitle && b.Borrowed);
@@ -99,11 +73,18 @@ namespace Library.Data
                     borrower.BorrowedBooks.Remove(bookToReturn);
                     bookToReturn.Borrowed = false;
                     bookToReturn.BorrowDate = null;
+                    bookToReturn.ReturnDate = DateTime.Now;
 
                     context.SaveChanges();
                 }
+
             }
         }
+
+
+
+
+
 
         public void DeleteBook(string bookTitle)
         {
