@@ -9,7 +9,7 @@ class Program
         DataAccess dataAccess = new DataAccess();
         //dataAccess.Seed();            //method to add already existing data to the database
 
-        dataAccess.BorrowBook("The Great Gatsby", "André", "Leskinen", 930503);     //method to borrow a book
+        dataAccess.BorrowBook("The Great Gatsby", "André", "Leskinen", 930503);     //parametarar som skickas till metoden i dataAcess
 
         //dataAccess.ReturnBook("The Great Gatsby", 930503);
 

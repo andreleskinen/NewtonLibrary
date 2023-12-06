@@ -25,31 +25,66 @@ namespace Library.Data
             
         }
 
+
+
+
+
+
         public void BorrowBook(string bookTitle, string borrowerFirstName, string borrowerLastName, int libraryCardNumber)
         {
-            var bookToBorrow = context.Books.FirstOrDefault(b => b.BookTitle == bookTitle);
+            var bookToBorrow = context.Books.FirstOrDefault(b => b.BookTitle == bookTitle); //Hittar den första boken med samma titel som angavs när man ville låna en bok
 
-            if (bookToBorrow != null && !bookToBorrow.Borrowed)
+            if (bookToBorrow != null && !bookToBorrow.Borrowed) //Kollar så att boken finns i tabbel och att den inte är uthyrd
             {
-                var borrower = context.Borrowers.FirstOrDefault(b => b.LibraryCardNumber == libraryCardNumber);
+                var borrower = context.Borrowers.FirstOrDefault(b => b.LibraryCardNumber == libraryCardNumber); //kollar om det redan finns ett LibraryCardNumber och om inte
 
                 if (borrower == null)
                 {
-                    borrower = new Borrower
+                    borrower = new Borrower //skapas en ny lånare här
                     {
-                        FirstName = borrowerFirstName,
+                        FirstName = borrowerFirstName, 
                         LastName = borrowerLastName,
                         LibraryCardNumber = libraryCardNumber
                     };
+
+                    context.Borrowers.Add(borrower);
+                    context.SaveChanges();
                 }
 
                 bookToBorrow.Borrowed = true;
                 bookToBorrow.BorrowDate = DateTime.Now;
+
                 borrower.BorrowedBooks.Add(bookToBorrow);
 
                 context.SaveChanges();
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public void ReturnBook(string bookTitle, int libraryCardNumber)
         {

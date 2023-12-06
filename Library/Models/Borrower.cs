@@ -13,7 +13,7 @@ namespace Library.Models
 
         public Borrower()
         {
-            BorrowedBooks = new List<Book>();
+            BorrowedBooks = new List<Book>(); 
         }
     }
 }
