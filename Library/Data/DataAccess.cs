@@ -1,9 +1,10 @@
 ﻿using System;
+using Helpers;
 using Library.Models;
 
 namespace Library.Data
 {
-    public class DataAccess
+    public class DataAccess : csSeedGenerator
     {
         private Context context;
 
@@ -23,11 +24,24 @@ namespace Library.Data
             var book4 = new Book { BookTitle = "Harry Potter and the Sorcerer's Stone", Author = "J.K.Rowling", ISBN = "978-0-7679-2766-6", PublicationYear = 1997, Rating = 4.75, Borrowed = false };
             var book5 = new Book { BookTitle = "The Hobbit", Author = "J.R.R.Tolkien", ISBN = "978-0-261-10295-3", PublicationYear = 1937, Rating = 4.3, Borrowed = false };
             var book6 = new Book { BookTitle = "Harry Potter and the Prisoner of Azkaban", Author = "J.K.Rowling", ISBN = "13: 978-1-234567-89-0", PublicationYear = 1999, Rating = 2.5, Borrowed = false };
-            context.Books.AddRange(book1,book2, book3, book4, book5);
+            context.Books.AddRange(book1,book2, book3, book4, book5, book6);
             
             context.SaveChanges();
         }
         #endregion
+
+        #region Create an author
+        public csSeedGenerator Seeder (csSeedGenerator _seeder)
+        {
+
+            var firstName = new Author { AuthorFirstName = _seeder.FirstName };
+            var lastName = new Author { AuthorLastName = _seeder.LastName };
+
+            context.Authors.AddRange(firstName, lastName);
+
+            return this;
+        }
+        #endregion;
 
         #region Borrow a book
         public void BorrowBook(string bookTitle, string borrowerFirstName, string borrowerLastName, int libraryCardNumber)
@@ -100,6 +114,8 @@ namespace Library.Data
             }
         }
         #endregion
+
+        
     }
 }
 

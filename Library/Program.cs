@@ -1,4 +1,6 @@
 ﻿using Library.Data;
+using Helpers;
+using System;
 
 namespace Library;
 
@@ -9,13 +11,15 @@ class Program
         DataAccess dataAccess = new DataAccess();
         //dataAccess.Seed();                                                            //method to add seed data to the database
 
-        dataAccess.BorrowBook("To Kill a Mockingbird", "André", "Leskinen", 930503);    //Låna en bok
+        //dataAccess.BorrowBook("To Kill a Mockingbird", "André", "Leskinen", 930503);    //Låna en bok
 
 
         //dataAccess.ReturnBook("To Kill a Mockingbird", 930503);                       //Lämna tillbaka en bok                      
 
 
         //dataAccess.DeleteBook("The Hobbit");                                          //radera en bok/column från tabellen
+
+        dataAccess.Seeder();
     }
 }
 

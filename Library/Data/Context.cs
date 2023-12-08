@@ -9,6 +9,7 @@ namespace Library.Data
     {
         public DbSet<Book> Books { get; set; }
         public DbSet<Borrower> Borrowers { get; set; }
+        public DbSet<Author> Authors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
