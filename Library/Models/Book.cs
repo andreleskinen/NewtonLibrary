@@ -21,7 +21,7 @@ namespace Library.Models
 
         public virtual ICollection<Author> Authors { get; set; } = new List<Author>();
 
-        //public int AuthorId { get; set; }
+        
         
     }
 }

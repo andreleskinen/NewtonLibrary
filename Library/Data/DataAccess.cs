@@ -22,8 +22,9 @@ namespace Library.Data
             var book3 = new Book { BookTitle = "The Great Gatsby", Author = "F.Scott Fitzgerald", ISBN = "978-0-7432-7356-5", PublicationYear = 1925, Rating = 4.2, Borrowed = false };
             var book4 = new Book { BookTitle = "Harry Potter and the Sorcerer's Stone", Author = "J.K.Rowling", ISBN = "978-0-7679-2766-6", PublicationYear = 1997, Rating = 4.75, Borrowed = false };
             var book5 = new Book { BookTitle = "The Hobbit", Author = "J.R.R.Tolkien", ISBN = "978-0-261-10295-3", PublicationYear = 1937, Rating = 4.3, Borrowed = false };
-
+            var book6 = new Book { BookTitle = "Harry Potter and the Prisoner of Azkaban", Author = "J.K.Rowling", ISBN = "13: 978-1-234567-89-0", PublicationYear = 1999, Rating = 2.5, Borrowed = false };
             context.Books.AddRange(book1,book2, book3, book4, book5);
+            
             context.SaveChanges();
         }
         #endregion

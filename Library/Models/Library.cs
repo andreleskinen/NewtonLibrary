@@ -7,6 +7,8 @@ namespace Library.Models
 
         public ICollection<Book> books { get; set; } = new List<Book>();
 
+        public ICollection<Author> authors { get; set; } = new List<Author>();
+
         public ICollection<Borrower> Borrowers { get; set; } = new List<Borrower>();
     }
 }
