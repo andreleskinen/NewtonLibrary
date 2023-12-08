@@ -9,7 +9,7 @@ namespace Library.Models
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public int LibraryCardNumber { get; set; }
-        public List<Book> BorrowedBooks { get; set; }
+        public List<Book> BorrowedBooks { get; set; } 
 
         public Borrower()
         {

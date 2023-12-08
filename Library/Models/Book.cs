@@ -19,7 +19,9 @@ namespace Library.Models
         public DateTime? BorrowDate { get; set; }
         public DateTime? ReturnDate { get; set; }
 
-        public int AuthorId { get; set; }
+        public virtual ICollection<Author> Authors { get; set; } = new List<Author>();
+
+        //public int AuthorId { get; set; }
         
     }
 }

@@ -12,6 +12,7 @@ namespace Library.Data
             context = new Context();
         }
 
+        #region Seed data
         public void Seed()
         {
             Context context = new Context();
@@ -19,17 +20,15 @@ namespace Library.Data
             var book1 = new Book { BookTitle = "Can´t Hurt Me", Author = "David Goggings", ISBN = "978-1-4321-0987-6", PublicationYear = 2018, Rating = 4.9, Borrowed = false };
             var book2 = new Book { BookTitle = "To Kill a Mockingbird", Author = "Harper Lee", ISBN = "978-0-06-112008-4", PublicationYear = 1960, Rating = 4.3, Borrowed = false};
             var book3 = new Book { BookTitle = "The Great Gatsby", Author = "F.Scott Fitzgerald", ISBN = "978-0-7432-7356-5", PublicationYear = 1925, Rating = 4.2, Borrowed = false };
-            var book4 = new Book { BookTitle = "Harry Potter and the Sorcerer's Stone", Author = "J.K.Rowling", ISBN = "978-0-7679-2766-6", PublicationYear = 1997, Rating = 4.7, Borrowed = false };
+            var book4 = new Book { BookTitle = "Harry Potter and the Sorcerer's Stone", Author = "J.K.Rowling", ISBN = "978-0-7679-2766-6", PublicationYear = 1997, Rating = 4.75, Borrowed = false };
             var book5 = new Book { BookTitle = "The Hobbit", Author = "J.R.R.Tolkien", ISBN = "978-0-261-10295-3", PublicationYear = 1937, Rating = 4.3, Borrowed = false };
 
-            
+            context.Books.AddRange(book1,book2, book3, book4, book5);
+            context.SaveChanges();
         }
+        #endregion
 
-
-
-
-
-
+        #region Borrow a book
         public void BorrowBook(string bookTitle, string borrowerFirstName, string borrowerLastName, int libraryCardNumber)
         {
             var bookToBorrow = context.Books.FirstOrDefault(b => b.BookTitle == bookTitle); //Hittar den första boken med samma titel som angavs när man ville låna en bok
@@ -59,7 +58,9 @@ namespace Library.Data
                 context.SaveChanges();
             }
         }
+        #endregion
 
+        #region Return a book
         public void ReturnBook(string bookTitle, int libraryCardNumber)
         {
             var bookToReturn = context.Books.FirstOrDefault(b => b.BookTitle == bookTitle && b.Borrowed);
@@ -75,17 +76,18 @@ namespace Library.Data
                     bookToReturn.BorrowDate = null;
                     bookToReturn.ReturnDate = DateTime.Now;
 
+                    context.Borrowers.Remove(borrower);
+
+                    //borrower.BorrowedBooks.Clear();
+
                     context.SaveChanges();
                 }
 
             }
         }
+        #endregion
 
-
-
-
-
-
+        #region Delete a book
         public void DeleteBook(string bookTitle)
         {
             var bookToDelete = context.Books.FirstOrDefault(b => b.BookTitle == bookTitle);
@@ -96,6 +98,7 @@ namespace Library.Data
                 context.SaveChanges();
             }
         }
+        #endregion
     }
 }
 
