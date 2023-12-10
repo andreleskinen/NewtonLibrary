@@ -1,5 +1,4 @@
 ﻿using System;
-using Helpers;
 using Library.Models;
 
 namespace Library.Data
@@ -16,16 +15,11 @@ namespace Library.Data
         #region Seed data
         public void Seed()
         {
-            var author1 = new Author { FirstName = "John", LastName = "Wick" };
-            var author2 = new Author { FirstName = "Joe", LastName = "Rogan" };
-            var author3 = new Author { FirstName = "Bill", LastName = "Murray" };
-            var author4 = new Author { FirstName = "Donald", LastName = "Trump" };
-            var author5 = new Author { FirstName = "Spgonlge", LastName = "Katt" };
-            context.Authors.AddRange(author1, author2, author3, author4, author5);
-
-            context.SaveChanges();
-
-
+            var author1 = new Author { FirstName = "David", LastName = "Goggings" };
+            var author2 = new Author { FirstName = "Harper", LastName = "Lee" };
+            var author3 = new Author { FirstName = "F.Scott", LastName = "Fitzgerald" };
+            var author4 = new Author { FirstName = "J.K", LastName = "Rowling" };
+            var author5 = new Author { FirstName = "J.R.R", LastName = "Tolkien" };
 
             var book1 = new Book { BookTitle = "Can´t Hurt Me", AuthorId = author1.AuthorId, ISBN = "978-1-4321-0987-6", PublicationYear = 2018, Rating = 4.9, Borrowed = false };
             var book2 = new Book { BookTitle = "To Kill a Mockingbird", AuthorId = author2.AuthorId, ISBN = "978-0-06-112008-4", PublicationYear = 1960, Rating = 4.3, Borrowed = false };
@@ -33,13 +27,24 @@ namespace Library.Data
             var book4 = new Book { BookTitle = "Harry Potter and the Sorcerer's Stone", AuthorId = author4.AuthorId, ISBN = "978-0-7679-2766-6", PublicationYear = 1997, Rating = 4.75, Borrowed = false };
             var book5 = new Book { BookTitle = "The Hobbit", AuthorId = author5.AuthorId, ISBN = "978-0-261-10295-3", PublicationYear = 1937, Rating = 4.3, Borrowed = false };
             var book6 = new Book { BookTitle = "Harry Potter and the Prisoner of Azkaban", AuthorId = author4.AuthorId, ISBN = "13: 978-1-234567-89-0", PublicationYear = 1999, Rating = 2.5, Borrowed = false };
+
+            author1.Books.Add(book1);
+            author2.Books.Add(book2);
+            author3.Books.Add(book3);
+            author4.Books.Add(book4);
+            author4.Books.Add(book6); 
+            author5.Books.Add(book5);
+
+            context.Authors.AddRange(author1, author2, author3, author4, author5);
             context.Books.AddRange(book1, book2, book3, book4, book5, book6);
-            
 
             context.SaveChanges();
+
+            Console.WriteLine("Seed Data added to to database!");
+            Thread.Sleep(2000);
+
         }
         #endregion
-        
 
         #region Create an author
         public void CreateAuthor()
@@ -63,8 +68,7 @@ namespace Library.Data
         }
         #endregion
 
-
-        #region
+        #region Create a book
         public void CreateBook()
         {
             List<Author> authors = context.Authors.ToList();
@@ -111,6 +115,7 @@ namespace Library.Data
         }
         #endregion
 
+        #region Create a Borrower
         public void CreateBorrower()
         {
             Console.WriteLine("Enter the borrowers firstname");
@@ -129,7 +134,10 @@ namespace Library.Data
             context.SaveChanges();
 
             Console.WriteLine($"Saved borrower {borrower.BorrowerId} successfully!");
+
+            Thread.Sleep(2000);
         }
+        #endregion
 
         #region Borrow a book
         public void BorrowBook()
@@ -164,32 +172,7 @@ namespace Library.Data
 
             context.SaveChanges();
 
-
-
-            /*if (bookToBorrow != null && !bookToBorrow.Borrowed) //Kollar så att boken finns i tabbel och att den inte är uthyrd
-            {
-                var borrower = context.Borrowers.FirstOrDefault(b => b.LibraryCardNumber == libraryCardNumber); //kollar om det redan finns ett LibraryCardNumber och om inte
-
-                if (borrower == null)
-                {
-                    borrower = new Borrower //skapas en ny lånare här
-                    {
-                        FirstName = borrowerFirstName,
-                        LastName = borrowerLastName,
-                        LibraryCardNumber = libraryCardNumber
-                    };
-
-                    context.Borrowers.Add(borrower);
-                    context.SaveChanges();
-                }
-
-                bookToBorrow.Borrowed = true;
-                bookToBorrow.BorrowDate = DateTime.Now;
-
-                borrower.BorrowedBooks.Add(bookToBorrow);
-
-                context.SaveChanges();
-        }*/
+            Console.WriteLine($"Book with ID {selectedBorrowerId} {book.BookTitle} has been borrwed");
         }
         #endregion
 
@@ -203,7 +186,7 @@ namespace Library.Data
                 return;
             }
 
-            Console.WriteLine("Select a Book");
+            Console.WriteLine("Select a Book ID");
 
 
             books.ForEach(book =>
@@ -225,19 +208,119 @@ namespace Library.Data
         #endregion
 
         #region Delete a book
-        public void DeleteBook(int bookId)
+        public void DeleteBook()
         {
-            var bookToDelete = context.Books.FirstOrDefault(b => b.BookId == bookId);
+            List<Book> books = context.Books.ToList();
 
-            if (bookToDelete != null)
+            Console.WriteLine("Select a Book ID to delete");
+
+            if (books.Count == 0)
             {
-                context.Books.Remove(bookToDelete);
-                context.SaveChanges();
+                Console.WriteLine("No books to delete");
+                return;
             }
+
+            books.ForEach(book =>
+            {
+                Console.WriteLine($"{book.BookId}: {book.BookTitle}");
+            });
+
+            int.TryParse(Console.ReadLine(), out int selectedBookId);
+
+            Book bookToDelete = context.Books.FirstOrDefault(book => book.BookId == selectedBookId);
+
+            if (bookToDelete == null)
+            {
+                Console.WriteLine("Invalid Book ID. No book deleted.");
+                return;
+            }
+
+            Console.WriteLine($"Book with ID {selectedBookId} has been deleted.");
+
+            context.Books.Remove(bookToDelete);
+            context.SaveChanges();
+
+            Thread.Sleep(2000);
+
+
         }
         #endregion
 
+        #region Delete an author
+        public void DeleteAuthor()
+        {
+            List<Author> authors = context.Authors.ToList();
 
+            Console.WriteLine("Select an Author ID to delete");
+            
+
+            if (authors.Count == 0)
+            {
+                Console.WriteLine("No authors to delete");
+                return;
+            }
+
+            authors.ForEach(author =>
+            {
+                Console.WriteLine($"{author.AuthorId} {author.FirstName} {author.LastName}");
+            });
+
+            int.TryParse(Console.ReadLine(), out int selectedAuthorId);
+
+            Author authorToDelete = context.Authors.FirstOrDefault(author => author.AuthorId == selectedAuthorId);
+
+            if (authorToDelete == null)
+            {
+                Console.WriteLine("Invalid Author ID. No author deleted.");
+                return;
+            }
+
+            Console.WriteLine($"Author with ID {selectedAuthorId} has been deleted.");
+
+            context.Authors.Remove(authorToDelete);
+            context.SaveChanges();
+
+            Thread.Sleep(2000); 
+
+        }
+        #endregion
+
+        #region Delete a borrower
+        public void DeleteBorrower()
+        {
+            List<Borrower> borrowers = context.Borrowers.ToList();
+
+            Console.WriteLine("Select a borrower ID to delete");
+
+            if (borrowers.Count == 0)
+            {
+                Console.WriteLine("No borrowers to delete");
+                return;
+            }
+
+            borrowers.ForEach(borrower =>
+            {
+                Console.WriteLine($"{borrower.BorrowerId} {borrower.FirstName} {borrower.LastName}");
+            });
+
+            int.TryParse(Console.ReadLine(), out int selectedBorrwerId);
+
+            Borrower borrowerToDelete = context.Borrowers.FirstOrDefault(borrower => borrower.BorrowerId == selectedBorrwerId);
+
+            if (borrowerToDelete == null)
+            {
+                Console.WriteLine("Invalid Borrwer ID. No Borrwer deleted.");
+                return;
+            }
+
+            Console.WriteLine($"Borrwer with ID {selectedBorrwerId} has been deleted.");
+
+            context.Borrowers.Remove(borrowerToDelete);
+            context.SaveChanges();
+
+            Thread.Sleep(2000);
+        }
+        #endregion
     }
 }
 

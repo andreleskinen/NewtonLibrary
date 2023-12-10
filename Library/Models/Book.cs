@@ -7,8 +7,8 @@ namespace Library.Models
         [Key]
         public int BookId { get; set; }
 
-        public int? BorrowerId { get; set; }  // Foreign key property
-        public virtual Borrower? Borrower { get; set; }  // Navigation property
+        public int? BorrowerId { get; set; }  
+        public virtual Borrower? Borrower { get; set; } 
 
         public string? BookTitle { get; set; }
         public int? AuthorId { get; set; }
@@ -24,7 +24,10 @@ namespace Library.Models
 
         public virtual ICollection<Author> Authors { get; set; } = new List<Author>();
 
-        
+        public Book()
+        {
+
+        }
         
     }
 }

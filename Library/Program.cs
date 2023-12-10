@@ -1,5 +1,4 @@
 ﻿using Library.Data;
-using Helpers;
 using System;
 
 namespace Library;
@@ -22,8 +21,8 @@ class Program
             Console.WriteLine("4. Borrow Book");
             Console.WriteLine("5. Return Book");
             Console.WriteLine("6. Delete Book");
-            Console.WriteLine("7. Delete Borrower");
-            Console.WriteLine("8. Delete Author");
+            Console.WriteLine("7. Delete Author");
+            Console.WriteLine("8. Delete Borrower");
 
             if (int.TryParse(Console.ReadLine(), out int selectedAction))
             {
@@ -51,11 +50,12 @@ class Program
                         dataAccess.DeleteBook();
                         break;
                     case 7:
-                        dataAccess.DeleteBorrower();
-                        break;
-                    case 8:
                         dataAccess.DeleteAuthor();
                         break;
+                    case 8:
+                        dataAccess.DeleteBorrower();
+                        break;
+                    
                 }
             }
         }

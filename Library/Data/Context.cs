@@ -13,14 +13,19 @@ namespace Library.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Author>()
+            .HasMany(a => a.Books)
+            .WithMany(b => b.Authors)
+            .UsingEntity(j => j.ToTable("AuthorBook"));
+
             modelBuilder.Entity<Borrower>()
             .HasMany(b => b.BorrowedBooks)
-            .WithOne(book => book.Borrower)  // Specify the foreign key property
+            .WithOne(book => book.Borrower)  
             .HasForeignKey(book => book.BorrowerId);
 
-            // Add other configurations as needed
-
             base.OnModelCreating(modelBuilder);
+
+            
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
