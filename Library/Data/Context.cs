@@ -14,8 +14,9 @@ namespace Library.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Borrower>()
-                .HasMany(b => b.BorrowedBooks)
-                .WithOne();
+            .HasMany(b => b.BorrowedBooks)
+            .WithOne(book => book.Borrower)  // Specify the foreign key property
+            .HasForeignKey(book => book.BorrowerId);
 
             // Add other configurations as needed
 

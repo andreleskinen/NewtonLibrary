@@ -5,8 +5,8 @@ namespace Library.Models
     {
         
         public int AuthorId { get; set; }
-        public string? AuthorFirstName { get; set; }
-        public string? AuthorLastName { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
 
         public virtual ICollection<Book> Books { get; set; } = new List<Book>();
 

@@ -7,8 +7,11 @@ namespace Library.Models
         [Key]
         public int BookId { get; set; }
 
+        public int? BorrowerId { get; set; }  // Foreign key property
+        public virtual Borrower? Borrower { get; set; }  // Navigation property
+
         public string? BookTitle { get; set; }
-        public string? Author { get; set; }
+        public int? AuthorId { get; set; }
 
         public string? ISBN { get; set; }
         public int PublicationYear { get; set; }
